@@ -1,0 +1,18 @@
+name: Update Data
+
+on:
+  workflow_dispatch: # 手动触发
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Update data.json
+        run: |
+          echo '{}' > data.json
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          git commit -m "自动更新 data.json"
+          git push
