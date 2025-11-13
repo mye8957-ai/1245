@@ -391,6 +391,26 @@
             height: 100%;
             object-fit: cover;
         }
+        
+        /* 提示信息样式 */
+        .alert {
+            padding: 10px;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .alert-success {
+            background-color: rgba(76, 175, 80, 0.2);
+            border: 1px solid var(--success-color);
+            color: #a5d6a7;
+        }
+        
+        .alert-error {
+            background-color: rgba(244, 67, 54, 0.2);
+            border: 1px solid var(--danger-color);
+            color: #ef9a9a;
+        }
     </style>
 </head>
 <body>
@@ -567,6 +587,7 @@
         let friends = JSON.parse(localStorage.getItem('chatFriends')) || {};
         let messages = JSON.parse(localStorage.getItem('chatMessages')) || {};
         let friendRequests = JSON.parse(localStorage.getItem('friendRequests')) || {};
+        let currentChatFriend = null;
 
         // DOM元素
         const loginModal = document.getElementById('loginModal');
@@ -589,6 +610,9 @@
 
             // 绑定事件
             bindEvents();
+            
+            // 初始化一些测试用户（仅用于演示）
+            initializeTestUsers();
         });
 
         // 绑定事件
@@ -624,6 +648,49 @@
             
             // 复制用户ID
             document.getElementById('userId').addEventListener('click', copyUserId);
+        }
+
+        // 初始化测试用户（仅用于演示）
+        function initializeTestUsers() {
+            // 如果还没有用户数据，创建一些测试用户
+            if (Object.keys(users).length === 0) {
+                users = {
+                    "user123": {
+                        username: "user123",
+                        password: "password123",
+                        id: "123456",
+                        avatar: "",
+                        nickname: "测试用户1"
+                    },
+                    "demo456": {
+                        username: "demo456",
+                        password: "demo45678",
+                        id: "654321",
+                        avatar: "",
+                        nickname: "演示用户"
+                    }
+                };
+                
+                friends = {
+                    "user123": [],
+                    "demo456": []
+                };
+                
+                messages = {
+                    "user123": {},
+                    "demo456": {}
+                };
+                
+                friendRequests = {
+                    "user123": [],
+                    "demo456": []
+                };
+                
+                localStorage.setItem('chatUsers', JSON.stringify(users));
+                localStorage.setItem('chatFriends', JSON.stringify(friends));
+                localStorage.setItem('chatMessages', JSON.stringify(messages));
+                localStorage.setItem('friendRequests', JSON.stringify(friendRequests));
+            }
         }
 
         // 显示注册弹窗
@@ -1066,4 +1133,4 @@
         }
     </script>
 </body>
-                </html>
+</html>
